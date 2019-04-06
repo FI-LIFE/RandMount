@@ -1,0 +1,7 @@
+## Interface: 80100
+## Title: RandMount
+## Version: 1.0.0
+## Notes: Summon a random mount
+## Author: Evgeniy "FI-LIFE" Naumenko
+
+RandMount.lua
