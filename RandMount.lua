@@ -1,5 +1,12 @@
 SLASH_RM1 = "/rm"
 SlashCmdList["RM"] = function(msg)
+    local inCombat = UnitAffectingCombat("player");
+
+    if inCombat then
+        print("in combat");
+        return false;
+    end
+
     local ids, list = C_MountJournal.GetMountIDs(), {};
 
     list['ground'] = {};
@@ -49,13 +56,13 @@ SlashCmdList["RM"] = function(msg)
         end
     end
 
-    if isSwimming then
+    if (isSwimming and #list['water'] > 0) then
         C_MountJournal.SummonByID(list['water'][math.random(1,#list['water'])])
-    elseif (canFly and haveFlySkill) then
-            C_MountJournal.SummonByID(list['flying'][math.random(1,#list['flying'])])
-    elseif (haveGroundSkill) then
+    elseif (canFly and haveFlySkill and #list['flying'] > 0) then
+        C_MountJournal.SummonByID(list['flying'][math.random(1,#list['flying'])])
+    elseif (haveGroundSkill and #list['ground'] > 0) then
         C_MountJournal.SummonByID(list['ground'][math.random(1,#list['ground'])])
-    else
+    elseif (#list['other'] > 0) then
         C_MountJournal.SummonByID(list['other'][math.random(1,#list['other'])])
     end
 end
